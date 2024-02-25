@@ -6,7 +6,7 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/logs"
 	mcrypt "github.com/mfpierre/go-mcrypt"
-	"github.com/udistrital/sga_mid_syllabus/utils"
+	"github.com/udistrital/sga_syllabus_mid/utils"
 	"github.com/udistrital/utils_oas/request"
 	"strconv"
 	"strings"
