@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/udistrital/sga_mid_syllabus/helpers"
+	"github.com/udistrital/sga_syllabus_mid/helpers"
 	"github.com/udistrital/utils_oas/request"
 	"strings"
 )
