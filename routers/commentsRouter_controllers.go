@@ -7,7 +7,7 @@ import (
 
 func init() {
 
-    beego.GlobalControllerRouter["sga_syllabus_mid/controllers:SyllabusController"] = append(beego.GlobalControllerRouter["sga_syllabus_mid/controllers:SyllabusController"],
+    beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusController"] = append(beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusController"],
         beego.ControllerComments{
             Method: "PostSyllabusTemplate",
             Router: "/generador-documentos",
@@ -16,7 +16,7 @@ func init() {
             Filters: nil,
             Params: nil})
 
-    beego.GlobalControllerRouter["sga_syllabus_mid/controllers:SyllabusLegacyController"] = append(beego.GlobalControllerRouter["sga_syllabus_mid/controllers:SyllabusLegacyController"],
+    beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusLegacyController"] = append(beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusLegacyController"],
         beego.ControllerComments{
             Method: "GetSyllabusLegacy",
             Router: "/syllabus/:qp_syllabus",
