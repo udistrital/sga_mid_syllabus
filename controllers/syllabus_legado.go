@@ -21,16 +21,12 @@ func (c *SyllabusLegacyController) URLMapping() {
 // @Param	qp_syllabus		path	string	true	"Parámetros de consulta cifrados (id proyecto curricular, plan de estudio, id espacio académico) syllabus"
 // @Success 200 {}
 // @Failure 404 not found resource
-// @router /syllabus/:qp_syllabus [get]
+// @router /:qp_syllabus [get]
 func (c *SyllabusLegacyController) GetSyllabusLegacy() {
 	defer errorhandler.HandlePanic(&c.Controller)
-
 	encodedParamsPlan := c.Ctx.Input.Param(":qp_syllabus")
-
 	resultado := services.GetSyllabusLegacy(encodedParamsPlan)
-
 	c.Data["json"] = resultado
 	c.Ctx.Output.SetStatus(resultado.Status)
-
 	c.ServeJSON()
 }

@@ -19,7 +19,7 @@ func init() {
 				&controllers.SyllabusController{},
 			),
 		),
-		beego.NSNamespace("/espacios_academicos_legacy",
+		beego.NSNamespace("/syllabus",
 			beego.NSInclude(
 				&controllers.SyllabusLegacyController{},
 			),

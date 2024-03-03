@@ -22,7 +22,7 @@ func (c *SyllabusController) URLMapping() {
 // @Param   body        body    {}  true        "body generar plantilla del syllabus"
 // @Success 200 {}
 // @Failure 403 :body {}
-// @router /generador-documentos [post]
+// @router /generar-plantilla [post]
 func (c *SyllabusController) PostSyllabusTemplate() {
 	defer errorhandler.HandlePanic(&c.Controller)
 	bodyData := c.Ctx.Input.RequestBody

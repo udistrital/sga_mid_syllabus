@@ -10,7 +10,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusController"] = append(beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusController"],
         beego.ControllerComments{
             Method: "PostSyllabusTemplate",
-            Router: "/generador-documentos",
+            Router: "/generar-plantilla",
             AllowHTTPMethods: []string{"post"},
             MethodParams: param.Make(),
             Filters: nil,
@@ -19,7 +19,7 @@ func init() {
     beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusLegacyController"] = append(beego.GlobalControllerRouter["github.com/udistrital/sga_syllabus_mid/controllers:SyllabusLegacyController"],
         beego.ControllerComments{
             Method: "GetSyllabusLegacy",
-            Router: "/syllabus/:qp_syllabus",
+            Router: "/:qp_syllabus",
             AllowHTTPMethods: []string{"get"},
             MethodParams: param.Make(),
             Filters: nil,
