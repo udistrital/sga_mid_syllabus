@@ -1,4 +1,4 @@
-# sYLLABUS - SGA MID
+# SYLLABUS - SGA MID
 
 API MID intermediaria entre el cliente SGA y la API/Serverless de syllabus con los endpoints requeridos para la gestión de la información necesaria en los módulos del SGA cliente.
 
@@ -12,7 +12,7 @@ API MID intermediaria entre el cliente SGA y la API/Serverless de syllabus con l
 
 ### Variables de Entorno
 ```shell
-SGA_MID_SYLLABUS_HTTP_PORT: [Puerto de ejecución API]
+SGA_SYLLABUS_MID_HTTP_PORT: [Puerto de ejecución API]
 ACADEMICA_ESPACIO_ACADEMICO_SERVICE: [Servicio API ACADEMICA ESPACIO_ACADEMICO]
 HOMOLOGACION_DEPENDENCIA_SERVICE: [Servicio API HOMOLOGACION DEPENDENCIA]
 IDIOMA_SERVICE: [Servicio API IDIOMA]
@@ -34,6 +34,12 @@ git pull origin develop && git checkout develop
 
 # 4. alimentar todas las variables de entorno que utiliza el proyecto.
 SGA_MID_HTTP_PORT=8080 RULER_URL=127.0.0.1:27017 SGA_MID_SOME_VARIABLE=some_value bee run
+
+# 5. Ejecutar comandos para descargar dependencias
+go mod init && go mod tidy
+
+# 6. Ejecutar proyecto
+bee run -downdoc=true -gendoc=true
 ```
 
 ### Ejecución Dockerfile
