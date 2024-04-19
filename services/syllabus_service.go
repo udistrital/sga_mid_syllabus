@@ -28,6 +28,7 @@ func PostSyllabusTemplate(data []byte) requestresponse.APIResponse {
 		}
 
 		if syllabusVersion, hasVersion := syllabusRequest["version"]; hasVersion {
+
 			syllabusErr := request.GetJson("http://"+beego.AppConfig.String("SyllabusService")+
 				fmt.Sprintf("syllabus?query=syllabus_code:%v,version:%v&limit=1&offset=0", syllabusCode, syllabusVersion), &syllabusResponse)
 			if syllabusErr != nil || syllabusResponse["Success"] == false {
@@ -50,10 +51,13 @@ func PostSyllabusTemplate(data []byte) requestresponse.APIResponse {
 				if syllabusErr == nil {
 					syllabusErr = fmt.Errorf("SyllabusService: %v", syllabusResponse["Message"])
 				}
+
 				logs.Error(syllabusErr.Error())
 				return requestresponse.APIResponseDTO(false, 404, nil, syllabusErr.Error())
 			}
+
 			syllabusData = syllabusResponse["Data"].(map[string]interface{})
+
 		}
 
 		spaceData, spaceErr := utils.GetAcademicSpaceData(
@@ -75,14 +79,16 @@ func PostSyllabusTemplate(data []byte) requestresponse.APIResponse {
 			}
 
 			if facultyErr == nil {
+
 				syllabusTemplateData = utils.GetSyllabusTemplateData(
 					spaceData, syllabusData,
 					facultyData, projectData, idiomas)
 
 				utils.GetSyllabusTemplate(syllabusTemplateData, &syllabusTemplateResponse,
 					fmt.Sprintf("%v", templateFormat))
+
 				return requestresponse.APIResponseDTO(true,
-					201, syllabusTemplateResponse["Data"].(map[string]interface{}),
+					201, syllabusTemplateResponse["body"].(map[string]interface{}),
 					"Generated Syllabus Template OK")
 			} else {
 				err := fmt.Errorf(
