@@ -4,14 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"encoding/xml"
-	"github.com/astaxie/beego"
-	"github.com/astaxie/beego/logs"
 	"io"
 	"net/http"
 	"reflect"
 	"sort"
 	"strconv"
 	"strings"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/logs"
 )
 
 func SendJson(url string, trequest string, target interface{}, datajson interface{}) error {
@@ -213,6 +214,9 @@ func DefaultTo[T any](value, defaultValue T) T {
 
 func DefaultToMapString(objMap map[string]any, key string, defaultValue any) any {
 	if value, hasKey := objMap[key]; hasKey {
+		if value == nil {
+			return defaultValue
+		}
 		return value
 	} else {
 		return defaultValue
