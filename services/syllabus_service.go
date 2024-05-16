@@ -56,6 +56,16 @@ func PostSyllabusTemplate(data []byte) requestresponse.APIResponse {
 			syllabusData = syllabusResponse["Data"].(map[string]interface{})
 		}
 
+		// Se valida que se envíen los datos planId y proyectoId  en el payload de la request
+		if syllabusRequest["planId"] == nil || syllabusRequest["proyectoId"] == nil {
+			err := fmt.Errorf("SyllabusTemplateService: Incomplete data to generate the document. Plan de estudios y/o Proyecto Curricular")
+			logs.Error(err.Error())
+			return requestresponse.APIResponseDTO(false, 404, err.Error(), err)
+		}
+		// Se asigna proyecto_curricular_id y plan_estudios_id al syllabusData
+		syllabusData["proyecto_curricular_id"] = syllabusRequest["proyectoId"]
+		syllabusData["plan_estudios_id"] = syllabusRequest["planId"]
+
 		spaceData, spaceErr := utils.GetAcademicSpaceData(
 			int(syllabusData["plan_estudios_id"].(float64)),
 			int(syllabusData["proyecto_curricular_id"].(float64)),
