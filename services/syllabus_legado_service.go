@@ -95,37 +95,45 @@ func GetSyllabusLegacy(encodedParamsPlan string) requestresponse.APIResponse {
 		int(proyectoCurricularId),
 		int(espacioAcademicoId))
 
+	if spaceErr != nil {
+		logs.Error(spaceErr.Error())
+		return requestresponse.APIResponseDTO(false, 404, nil, spaceErr.Error())
+	}
+
 	projectData, projectErr := utils.GetProyectoCurricular(int(proyectoCurricularId))
 
-	if spaceErr == nil && projectErr == nil {
-		facultyData, facultyErr := utils.GetFacultadDelProyectoC(projectData["id_oikos"].(string))
-		idiomas := ""
+	if projectErr != nil {
+		logs.Error(projectErr.Error())
+		return requestresponse.APIResponseDTO(false, 404, nil, projectErr.Error())
+	}
 
-		if syllabusData["idioma_espacio_id"] != nil {
-			idiomasStr, idiomaErr := utils.GetIdiomas(syllabusData["idioma_espacio_id"].([]interface{}))
-			if idiomaErr == nil {
-				idiomas = idiomasStr
-			}
-		}
+	facultyData, facultyErr := utils.GetFacultadDelProyectoC(projectData["id_oikos"].(string))
+	idiomas := ""
 
-		if facultyErr == nil {
-			syllabusTemplateData = utils.GetSyllabusTemplateData(
-				spaceData, syllabusData,
-				facultyData, projectData, idiomas)
-			fmt.Println(syllabusTemplateData)
-			return requestresponse.APIResponseDTO(true, 200, syllabusTemplateData, "Syllabus OK")
-		} else {
-			err := fmt.Errorf(
-				"SyllabusService: Incomplete data. Facultad y/o Idioma")
-			logs.Error(err.Error())
-			return requestresponse.APIResponseDTO(false, 404, nil, err.Error())
+	if syllabusData["idioma_espacio_id"] != nil {
+		idiomasStr, idiomaErr := utils.GetIdiomas(syllabusData["idioma_espacio_id"].([]interface{}))
+		if idiomaErr == nil {
+			idiomas = idiomasStr
 		}
+	}
+
+	if syllabusData["plan_estudios_id"] == nil {
+		syllabusData["plan_estudios_id"] = planEstudioString
+	}
+
+	if facultyErr == nil {
+		syllabusTemplateData = utils.GetSyllabusTemplateData(
+			spaceData, syllabusData,
+			facultyData, projectData, idiomas)
+		fmt.Println(syllabusTemplateData)
+		return requestresponse.APIResponseDTO(true, 200, syllabusTemplateData, "Syllabus OK")
 	} else {
 		err := fmt.Errorf(
-			"SyllabusService: Incomplete data. Espacio Académico y/o Proyecto Curricular")
+			"SyllabusService: Incomplete data. Facultad y/o Idioma")
 		logs.Error(err.Error())
 		return requestresponse.APIResponseDTO(false, 404, nil, err.Error())
 	}
+
 }
 
 func decodeParamsPlan(encryptedParamsString string) (string, error) {
@@ -146,7 +154,7 @@ func decodeParamsPlan(encryptedParamsString string) (string, error) {
 	if len(decrypted) == 0 {
 		return "", fmt.Errorf("wrong decryption")
 	}
-	return fmt.Sprintf("%s", decrypted), nil
+	return string(decrypted), nil
 }
 
 func paramsString2Map(paramsString string) (map[string]interface{}, error) {
