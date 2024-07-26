@@ -8,33 +8,7 @@
     },
     "basePath": "/v1",
     "paths": {
-        "/espacios_academicos_legacy/syllabus/{qp_syllabus}": {
-            "get": {
-                "tags": [
-                    "espacios_academicos_legacy"
-                ],
-                "description": "get syllabus",
-                "operationId": "SyllabusLegacyController.GetSyllabusLegacy",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "qp_syllabus",
-                        "description": "Parámetros de consulta cifrados (id proyecto curricular, plan de estudio, id espacio académico) syllabus",
-                        "required": true,
-                        "type": "string"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "{}"
-                    },
-                    "404": {
-                        "description": "not found resource"
-                    }
-                }
-            }
-        },
-        "/syllabus/generador-documentos": {
+        "/syllabus/generar-plantilla": {
             "post": {
                 "tags": [
                     "syllabus"
@@ -58,6 +32,32 @@
                     },
                     "403": {
                         "description": ":body {}"
+                    }
+                }
+            }
+        },
+        "/syllabus/{qp_syllabus}": {
+            "get": {
+                "tags": [
+                    "syllabus"
+                ],
+                "description": "get syllabus",
+                "operationId": "SyllabusLegacyController.GetSyllabusLegacy",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "qp_syllabus",
+                        "description": "Parámetros de consulta cifrados (id proyecto curricular, plan de estudio, id espacio académico) syllabus",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "{}"
+                    },
+                    "404": {
+                        "description": "not found resource"
                     }
                 }
             }

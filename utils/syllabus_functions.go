@@ -3,7 +3,7 @@ package utils
 import (
 	"fmt"
 	"github.com/astaxie/beego"
-	"github.com/udistrital/sga_mid_syllabus/helpers"
+	"github.com/udistrital/sga_syllabus_mid/helpers"
 	"github.com/udistrital/utils_oas/request"
 	"strings"
 )
@@ -140,10 +140,15 @@ func GetSyllabusTemplateData(spaceData, syllabusData, facultyData, projectData m
 	return syllabusTemplateData
 }
 
-func GetSyllabusTemplate(syllabusTemplateData map[string]interface{}, syllabusTemplateResponse *map[string]interface{}) {
-
+func GetSyllabusTemplate(syllabusTemplateData map[string]interface{}, syllabusTemplateResponse *map[string]interface{}, format string) {
+	var url string
+	if strings.ToLower(format) == "pdf" {
+		url = "http://" + beego.AppConfig.String("SyllabusService") + "v2/syllabus/template"
+	} else {
+		url = "http://" + beego.AppConfig.String("SyllabusService") + "syllabus/template/spreadsheet"
+	}
 	if err := helpers.SendJson(
-		"http://"+beego.AppConfig.String("SyllabusService")+"v2/syllabus/template",
+		url,
 		"POST",
 		&syllabusTemplateResponse,
 		syllabusTemplateData); err != nil {
